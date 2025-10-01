@@ -23,46 +23,37 @@
 </head>
 
 <body class="bg-gradient-primary">
-
     <?php
     include "connection.php";
     session_start();
     if (isset($_POST['btnsubmit'])) {
+        $nama = $_POST['nama'];
         $email_account = $_POST['email_account'];
-        $user_password = md5($_POST['user_password']);
+        $user_password = $_POST['user_password'];
+        $conf_password = $_POST['conf_password'];
 
-        $sSQL = "";
-        $sSQL = " select * from tb_users where email='$email_account'";
-        $sSQL .= " and password= '$user_password' limit 1";
-
-        $result = mysqli_query($conn, $sSQL);
-        $row = mysqli_fetch_assoc($result);
-        if (mysqli_num_rows($result) > 0) {
-            $_SESSION["email"] = $email_account;
-            $_SESSION['id_user'] = $row['id_user'];
-            $_SESSION['isLoggedin'] = 1;
-            $_SESSION['LoginGagal'] = 0;
-
-            if ($row['role'] == 'mahasiswa') {
-                $_SESSION['mahasiswa'] = true;
-                header("Location: ../index.php");
-            } elseif ($row['role'] == 'kurator') {
-                $_SESSION['kurator'] = true;
-                header("Location: ../kurasi.php");
-            } elseif ($row['role'] == 'admin') {
-                $_SESSION['admin'] = true;
-                header("location:dashboard.php");
-            }
+        if ($user_password != $conf_password) {
+            $err = "Passwordnya gak sama!";
         } else {
-            $_SESSION['isLoggedin'] = 0;
-            $_SESSION['LoginGagal'] = 1;
-            header("location:login.php");
+            $sSQL = "";
+            $sSQL = " select * from tb_users where email='$email_account'";
+            $result = mysqli_query($conn, $sSQL);
+            if (mysqli_num_rows($result) > 0) {
+                $err = "Email sudah terdaftar tau!";
+            } else {
+                $user_password = md5(trim($user_password));
+                $role = 'mahasiswa';
+                $sql = "insert into tb_Users (nama,email,password,role)
+                        values
+                        ('$nama','$email_account','$user_password','$role')
+                        ";
+                mysqli_query($conn, $sql);
+                header("Location: login.php");
+            }
         }
     }
     ?>
-
     <div class="container">
-
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
@@ -76,27 +67,35 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Login Dulu Ya!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Registrasi Yuk!</h1>
                                     </div>
-                                    <form class="user" method="POST" action="login.php">
+                                    <form class="user" method="POST" action="">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-user" id="nama" name="nama" aria-describedby="nama" placeholder="Masukin nama kamu..." required autocomplete="off">
+                                        </div>
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" id="email_account" name="email_account" aria-describedby="email_accounts" placeholder="Masukin email yuk..." required autocomplete="off">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
                                                 id="user_password" name="user_password"
-                                                placeholder="Password kamu..." required>
+                                                placeholder="Password yang kuat..." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user"
+                                                id="conf_password" name="conf_password"
+                                                placeholder="Sama kaya password diatas ya..." required>
                                         </div>
 
-                                        <button type="submit" name="btnsubmit" id="btnsubmit" class="btn btn-success">Login</button>
+                                        <button type="submit" name="btnsubmit" id="btnsubmit" class="btn btn-success">Submit</button>
                                         <?php
-                                        if (isset($_SESSION['LoginGagal']) && $_SESSION['LoginGagal'] == 1) {
+                                        if (isset($err)) {
                                         ?>
-                                            <p class="text-danger pt-2">Email atau Password salah!</p>
+                                            <p class="text-danger pt-2"><?= $err; ?></p>
                                         <?php
                                         }
                                         ?>
-                                        <p class="small mt-3">Belum punya akun? <a href="registrasi_mahasiswa.php" class="text-decoration-underline text-black">Daftar dulu yuk.</a></p>
+                                        <p class="small mt-3">Sudah punya akun? <a href="login.php" class="text-decoration-underline text-black">Login yuk.</a></p>
                                         <hr>
 
                                     </form>

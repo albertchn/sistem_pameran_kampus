@@ -68,7 +68,7 @@ if (!isset($_SESSION['admin'])) {
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
 
-            <a href="kurator.php">
+            <a href="mahasiswa.php">
                 <button type="button" class="btn btn-danger">Cancel</button>
             </a>
         </form>

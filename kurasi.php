@@ -176,12 +176,14 @@ if (!isset($_SESSION['kurator'])) {
                                 <td><a href="kurasi_karya.php?id_karya=<?= $id_karya; ?>" class="btn btn-primary">Kurasi</td>
                             <?php endif; ?>
                         </tr>
-                <?php
+                    <?php
                     }
-                }
-
-
-                ?>
+                } else {
+                    ?>
+                    <tr>
+                        <td align="center" colspan="5" class="text-danger">Tidak ada karya untuk dikurasi !</td>
+                    </tr>
+                <?php } ?>
 
 
 
