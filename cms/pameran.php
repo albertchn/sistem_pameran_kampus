@@ -70,6 +70,7 @@ if (!isset($_SESSION['admin'])) {
                     <th>Tanggal</th>
                     <th>Lokasi</th>
                     <th>Ruang Display</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -81,6 +82,7 @@ if (!isset($_SESSION['admin'])) {
                     $no = 0;
                     while ($row = mysqli_fetch_assoc($result)) {
                         $no++;
+                        $id_pameran = $row['id_pameran'];
                         $judul_karya = $row['judul_karya'];
                         $foto_karya = $row['foto_kaya'];
                         $tanggal = $row['tanggal'];
@@ -95,6 +97,10 @@ if (!isset($_SESSION['admin'])) {
                             <td><?= date('d-m-Y', strtotime($tanggal)); ?></td>
                             <td><?= $lokasi; ?></td>
                             <td><?= $ruang_display; ?></td>
+                            <td>
+                                <a href="edit_pameran.php?id_pameran=<?= $id_pameran; ?>" class="btn btn-success">Edit</a>
+                                <a href="delete_pameran.php?id_pameran=<?= $id_pameran; ?>" class="btn btn-danger" onclick="return confirm('Hapus jadwal pameran ini?')">Delete</a>
+                            </td>
                         </tr>
                 <?php
                     }
