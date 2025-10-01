@@ -49,8 +49,8 @@
                     <th>No</th>
                     <th>Judul Karya</th>
                     <th>Foto Karya</th>
-                    <th>Deskripsi</th>
-                    <th>Pencita</th>
+                    <th>Tenggat Kurasi</th>
+                    <th>Pencipta</th>
                     <th>Skor</th>
                     <th>Status</th>
                 </tr>
@@ -58,7 +58,7 @@
             <tbody>
                 <?php
                 $sSQL = "";
-                $sSQL = "select * from tb_karya order by id_karya desc";
+                $sSQL = "select * from tb_karya where status in ('submitted','accepted','withdrawn') order by id_karya";
                 $result = mysqli_query($conn, $sSQL);
                 if (mysqli_num_rows($result) > 0) {
                     $no = 0;
@@ -66,7 +66,7 @@
                         $no++;
                         $judul_karya = $row['judul_karya'];
                         $foto_karya = $row['foto_kaya'];
-                        $deskripsi = $row['deskripsi'];
+                        $tenggat_kurasi = $row['tenggat_kurasi'];
                         $pencipta = $row['pencipta'];
                         $skor = $row['skor'];
                         $status = $row['status'];
@@ -74,10 +74,10 @@
 
                         <tr>
                             <td><?php echo $no; ?></td>
-                            <td><?= $judul_karya; ?></td>
+                            <td><a href="detail_karya.php" class="text-black"><?php echo $judul_karya; ?></td>
                             <td><img src="../images/<?= $foto_karya; ?>" width="60px"></td>
                             <td>
-                                <p style="mex-width:100px"><?= $deskripsi; ?></p>
+                                <p><?= date('d-m-Y', strtotime($tenggat_kurasi)); ?></p>
                             </td>
                             <td><?= $pencipta; ?></td>
                             <td><?= $skor; ?></td>

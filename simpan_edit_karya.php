@@ -5,8 +5,11 @@ include "function.php";
 
 if (isset($_POST['draft'])) {
     $status = 'draft';
+    $tenggat_kurasi = '';
 } else {
     $status = 'submitted';
+    $today = date('Y-m-d');
+    $tenggat_kurasi = date('Y-m-d', strtotime($today . '+ 7 days'));
 }
 
 if ($_POST['judul_karya']) {
@@ -23,15 +26,11 @@ if ($_POST['judul_karya']) {
     }
 
     $sql = "";
-    $sql = " update tb_karya
-             set 
-             judul_karya='$judul_karya',
-             foto_kaya='$foto_karya',
-             deskripsi='$deskripsi',
-             pencipta='$pencipta',
-             status='$status' 
-             where id_karya='$id_karya'
-            ";
+    $sql = " insert into tb_karya
+         (id_user,judul_karya, foto_kaya, deskripsi, pencipta, tenggat_kurasi ,status)
+         values 
+         ('$id_user','$judul_karya','$foto_karya','$deskripsi', '$pencipta','$tenggat_kurasi', '$status')
+      ";
 
     if (mysqli_query($conn, $sql))
         header("Location:pengajuan_karya.php");

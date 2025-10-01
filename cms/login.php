@@ -80,7 +80,7 @@
 
                                         <button type="submit" name="btnsubmit" id="btnsubmit" class="btn btn-success">Login</button>
                                         <?php
-                                        if ($_SESSION['LoginGagal'] == 1) {
+                                        if (isset($_SESSION['LoginGagal']) && $_SESSION['LoginGagal'] == 1) {
                                         ?>
                                             <p class="text-danger pt-2">Email atau Password salah!</p>
                                         <?php
