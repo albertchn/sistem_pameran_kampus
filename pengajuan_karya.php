@@ -134,7 +134,9 @@ if (!$_SESSION['isLoggedin'] == 1)
                                     <div class="col col-6">
                                         <p>Pencipta: <?= $pencipta; ?></p>
                                         <?php if ($status == 'accepted' or $status == 'submitted'): ?>
-                                            <p>Status: <?= ucwords($status); ?></p>
+                                            <p>Status: <span style="color: lime;"><?= ucwords($status); ?></span></p>
+                                        <?php elseif ($status == 'rejected'): ?>
+                                            <p>Status: <span style="color: red;"><?= ucwords($status); ?></span></p>
                                         <?php endif; ?>
                                         <p>Skor:
                                             <?php if (empty($skor)): ?>
@@ -152,7 +154,7 @@ if (!$_SESSION['isLoggedin'] == 1)
                                             if (mysqli_num_rows($sql) > 0):
                                             ?>
                                                 <p>Jadwal Pameran:</p>
-                                                <p>Tanggal: <?= $pmr['tanggal']; ?></p>
+                                                <p>Tanggal: <?= date('d-m-Y', strtotime($pmr['tanggal'])); ?></p>
                                                 <p>Lokasi: <?= $pmr['lokasi']; ?></p>
                                                 <p>Ruang: <?= $pmr['ruang_display']; ?></p>
                                             <?php else: ?>

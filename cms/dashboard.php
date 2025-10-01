@@ -48,7 +48,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="dashboard.php">
+        <a class="nav-link" href="dashboard.php" onclick="refreshIframe()">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -66,26 +66,26 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="mahasiswa.php" target="ifrm">
+        <a class="nav-link" href="mahasiswa.php" target="ifrm" onclick="refreshIframe()">
           <i class="fas fa-fw fa-graduation-cap"></i>
           <span>Mahasiswa</span></a>
       </li>
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="kurator.php" target="ifrm">
+        <a class="nav-link" href="kurator.php" target="ifrm" onclick="refreshIframe()">
           <i class="fas fa-fw fa-magic"></i>
           <span>Kurator</span></a>
       </li>
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="karya.php" target="ifrm">
+        <a class="nav-link" href="karya.php" target="ifrm" onclick="refreshIframe()">
           <i class="fas fa-fw fa-image"></i>
           <span>Karya</span></a>
       </li>
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="pameran.php" target="ifrm">
+        <a class="nav-link" href="pameran.php" target="ifrm" onclick="refreshIframe()">
           <i class="fas fa-fw fa-film"></i>
           <span>Pameran</span></a>
       </li>
@@ -252,6 +252,12 @@
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+
+  <script>
+    function refreshIframe() {
+      document.getElementById('ifrm').contentWindow.location.reload();
+    }
+  </script>
 
 </body>
 

@@ -10,7 +10,7 @@ if (!$_SESSION['isLoggedin'] == 1)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kurasi | Pusat Seni</title>
+    <title>Daftar Kurasi | Pusat Seni</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -95,7 +95,10 @@ if (!$_SESSION['isLoggedin'] == 1)
                 <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="pengajuan_karya.php">Daftar Kurasi</a>
+                            <a class="nav-link active" href="kurasi.php">Daftar Kurasi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="riwayat_kurasi.php">Riwayat Kurasi</a>
                         </li>
                     </ul>
                 </div>

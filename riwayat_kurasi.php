@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karya | Pusat Seni</title>
+    <title>Riwayat Kurasi | Pusat Seni</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -27,18 +27,89 @@
         }
     </script>
 
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .nav-link,
+        .dropdown-item {
+            font-size: 13px;
+            color: black;
+            text-transform: uppercase;
+        }
+
+        .nav-item {
+            margin-right: 15px;
+        }
+
+        .active {
+            background-color: darkblue;
+            color: white !important;
+        }
+
+        .nav-link:hover,
+        .dropdown-item:hover {
+            background-color: red;
+            color: white !important;
+        }
+
+        .flip:hover {
+            transform: rotateY(360deg);
+            transition: transform 1s;
+        }
+
+        .link-footer {
+            color: white;
+            text-decoration: none;
+        }
+
+        .link-footer:hover {
+            color: yellow;
+        }
+
+        .active-footer {
+            color: aqua;
+        }
+    </style>
 
 </head>
 
 <body>
+    <div class="container-fluid  border-bottom border-dark" id="top-bar">
+        <nav class="navbar navbar-expand-sm  text-dark">
+            <div class="container-fluid">
+                <!-- <a class="navbar-brand" href="#"><img src="images/logo.png" class="img-fluid" style="width:65px"></a> -->
+                <a class="navbar-brand" href="#">
+                    <h5>Pusat Seni</h5>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="kurasi.php">Daftar Kurasi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="riwayat_kurasi.php">Riwayat Kurasi</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="ms-auto">
+                    <a href="cms/logout.php" class="btn btn-danger" onclick="return confirm('Logout sekarang?')">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </div>
 
     <?php
-    include "connection.php";
+    include "cms/connection.php";
     ?>
 
 
     <div class="container">
-        <h2 class="text-center mb-3">Daftar Karya</h2>
+        <h2 class="text-center mb-3">Riwayat Kurasi</h2>
 
         <input id="myInput" type="text" placeholder="Search..">
         <br>
@@ -49,7 +120,6 @@
                     <th>No</th>
                     <th>Judul Karya</th>
                     <th>Foto Karya</th>
-                    <th>Tenggat Kurasi</th>
                     <th>Pencipta</th>
                     <th>Skor</th>
                     <th>Status</th>
@@ -58,7 +128,7 @@
             <tbody>
                 <?php
                 $sSQL = "";
-                $sSQL = "select * from tb_karya where status in ('submitted','accepted','withdrawn','rejected') order by id_karya";
+                $sSQL = "select * from tb_karya where status in ('accepted','withdrawn','rejected') order by id_karya";
                 $result = mysqli_query($conn, $sSQL);
                 if (mysqli_num_rows($result) > 0) {
                     $no = 0;
@@ -67,33 +137,15 @@
                         $id_karya = $row['id_karya'];
                         $judul_karya = $row['judul_karya'];
                         $foto_karya = $row['foto_kaya'];
-                        $tenggat_kurasi = $row['tenggat_kurasi'];
                         $pencipta = $row['pencipta'];
                         $skor = $row['skor'];
                         $status = $row['status'];
-
-                        $today = date('Y-m-d');
-                        if ($status == 'submitted' && $tenggat_kurasi < $today) {
-                            $sql = mysqli_query($conn, "select count(id_karya) as jumlah_kurator, sum(skor) as jumlah_skor from tb_kurasi where id_karya='$id_karya'")->fetch_assoc();
-                            $skorAkhir = intval($sql['jumlah_skor']) / intval($sql['jumlah_kurator']);
-                            if ($skorAkhir >= 0 && $skorAkhir < 70) {
-                                $statusAkhir = 'rejected';
-                            } elseif ($skorAkhir >= 70 && $skorAkhir <= 100) {
-                                $statusAkhir = 'accepted';
-                            } else {
-                                $statusAkhir = $status;
-                            }
-                            mysqli_query($conn, "update tb_karya set skor='$skorAkhir', status='$statusAkhir' where id_karya='$id_karya'");
-                        }
                 ?>
 
                         <tr>
                             <td><?php echo $no; ?></td>
                             <td><a href="detail_karya.php" class="text-black"><?php echo $judul_karya; ?></td>
-                            <td><img src="../images/<?= $foto_karya; ?>" width="60px"></td>
-                            <td>
-                                <p><?= date('d-m-Y', strtotime($tenggat_kurasi)); ?></p>
-                            </td>
+                            <td><img src="images/<?= $foto_karya; ?>" width="60px"></td>
                             <td><?= $pencipta; ?></td>
                             <td><?= $skor; ?></td>
                             <td><?= $status; ?></td>
