@@ -86,7 +86,7 @@ if (!isset($_SESSION['admin'])) {
 
                         <tr>
                             <td><?php echo $no; ?></td>
-                            <td><a href="karya_mahasiswa.php" class="text-black"><?php echo $nama; ?></a></td>
+                            <td><a href="karya_mahasiswa.php?id_user=<?= $id_user; ?>&nama=<?= $nama; ?>" class="text-black"><?php echo $nama; ?></a></td>
                             <td><?php echo $email; ?></td>
                             <td>
                                 <a href="edit_mahasiswa.php?email=<?php echo $email; ?>">

@@ -119,11 +119,12 @@ if (!isset($_SESSION['kurator'])) {
 
     <?php
     include "cms/connection.php";
+    $id_user = $_SESSION['id_user'];
     ?>
 
 
     <div class="container">
-        <h2 class="text-center mb-3">Riwayat Kurasi</h2>
+        <h2 class="text-center my-3">Riwayat Kurasi</h2>
 
         <input id="myInput" type="text" placeholder="Search..">
         <br>
@@ -142,7 +143,7 @@ if (!isset($_SESSION['kurator'])) {
             <tbody>
                 <?php
                 $sSQL = "";
-                $sSQL = "select * from tb_karya where status in ('accepted','withdrawn','rejected') order by id_karya";
+                $sSQL = "select ky.*, kr.id_user from tb_karya ky left join tb_kurasi kr on ky.id_karya=kr.id_karya where ky.status in ('accepted','withdrawn','rejected') and kr.id_user='$id_user'";
                 $result = mysqli_query($conn, $sSQL);
                 if (mysqli_num_rows($result) > 0) {
                     $no = 0;
@@ -164,12 +165,14 @@ if (!isset($_SESSION['kurator'])) {
                             <td><?= $skor; ?></td>
                             <td><?= $status; ?></td>
                         </tr>
-                <?php
+                    <?php
                     }
-                }
-
-
-                ?>
+                } else {
+                    ?>
+                    <tr>
+                        <td align="center" colspan="7" class="text-danger">Mahasiswa belum mengajukan karya !</td>
+                    </tr>
+                <?php } ?>
 
 
 

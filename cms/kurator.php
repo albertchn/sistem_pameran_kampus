@@ -86,7 +86,7 @@ if (!isset($_SESSION['admin'])) {
 
                         <tr>
                             <td><?php echo $no; ?></td>
-                            <td><a href="kurasi_kurator.php" class="text-black"><?php echo $nama; ?></a></td>
+                            <td><a href="kurasi_kurator.php?id_user=<?= $id_user; ?>&nama=<?= $nama; ?>" class="text-black"><?php echo $nama; ?></a></td>
                             <td><?php echo $email; ?></td>
                             <td>
                                 <a href="edit_kurator.php?email=<?php echo $email; ?>">

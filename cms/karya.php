@@ -103,7 +103,7 @@ if (!isset($_SESSION['admin'])) {
 
                         <tr>
                             <td><?php echo $no; ?></td>
-                            <td><a href="detail_karya.php" class="text-black"><?php echo $judul_karya; ?></td>
+                            <td><a href="detail_karya.php?id_karya=<?= $id_karya; ?>" class="text-black"><?php echo $judul_karya; ?></td>
                             <td><img src="../images/<?= $foto_karya; ?>" width="60px"></td>
                             <td>
                                 <p><?= date('d-m-Y', strtotime($tenggat_kurasi)); ?></p>
