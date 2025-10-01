@@ -59,7 +59,7 @@
 <body>
     <?php
     include "cms/connection.php";
-
+    session_start();
     ?>
 
 
@@ -83,10 +83,20 @@
                         </li>
                     </ul>
                 </div>
-                <div class="ms-auto">
-                    <a href="cms/login.php" class="btn btn-primary">Login</a>
-                    <a href="cms/daftar.php" class="btn btn-success ms-2">Daftar</a>
-                </div>
+                <?php
+                if (!isset($_SESSION['isLoggedin']) == 1):
+                ?>
+                    <div class="ms-auto">
+                        <a href="cms/login.php" class="btn btn-primary">Login</a>
+                        <a href="cms/daftar.php" class="btn btn-success ms-2">Daftar</a>
+                    </div>
+                <?php
+                else:
+                ?>
+                    <div class="ms-auto">
+                        <a href="cms/logout.php" class="btn btn-danger" onclick="return confirm('Logout sekarang?')">Logout</a>
+                    </div>
+                <?php endif; ?>
             </div>
         </nav>
     </div>

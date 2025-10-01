@@ -1,3 +1,9 @@
+<?php
+session_start();
+
+if (!$_SESSION['isLoggedin'] == 1)
+    header("location:cms/login.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -80,12 +86,15 @@
                 <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.php">Beranda</a>
+                            <a class="nav-link" href="index.php">Beranda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="pengajuan_karya.php">Pengajuan Karya</a>
+                            <a class="nav-link active" href="pengajuan_karya.php">Pengajuan Karya</a>
                         </li>
                     </ul>
+                </div>
+                <div class="ms-auto">
+                    <a href="cms/logout.php" class="btn btn-danger" onclick="return confirm('Logout sekarang?')">Logout</a>
                 </div>
             </div>
         </nav>
@@ -100,7 +109,6 @@
         <div class="row mt-4">
             <?php
             include "cms/connection.php";
-            session_start();
             $id_user = $_SESSION['id_user'];
             $sSQL = "";
             $sSQL = "select * from tb_karya where id_user = $id_user";
@@ -108,6 +116,7 @@
             if (mysqli_num_rows($result) > 0) {
                 $no = 0;
                 while ($row = mysqli_fetch_assoc($result)) {
+                    $id_karya = $row['id_karya'];
                     $judul_karya = $row['judul_karya'];
                     $foto_karya = $row['foto_kaya'];
                     $deskripsi = $row['deskripsi'];
@@ -116,20 +125,50 @@
                     $skor = $row['skor'];
 
             ?>
-                    <div class="col-4">
-                        <div class="card">
-                            <img class="card-img-top" src="images/<?= $foto_karya; ?>" alt="">
+                    <div class="col col-6 my-2">
+                        <div class="card" style="min-height: 550px;">
+                            <img class="card-img-top" src="images/<?= $foto_karya; ?>" height="200px">
                             <div class="card-body">
                                 <h3 class=""><?= $judul_karya; ?></h3>
-                                <p class=""><?= $deskripsi; ?></p>
-                                <p><?= $pencipta; ?></p>
-                                <p><?= $status; ?></p>
-                                <p>
-                                    <?php if (empty($skor)): ?>
-                                        -
-                                    <?php else: echo $skor;
-                                    endif; ?>
-                                </p>
+                                <div class="row">
+                                    <div class="col col-6">
+                                        <p>Pencipta: <?= $pencipta; ?></p>
+                                        <?php if ($status == 'accepted' or $status == 'submitted'): ?>
+                                            <p>Status: <?= ucwords($status); ?></p>
+                                        <?php endif; ?>
+                                        <p>Skor:
+                                            <?php if (empty($skor)): ?>
+                                                -
+                                            <?php else: echo $skor;
+                                            endif; ?>
+                                        </p>
+                                    </div>
+                                    <div class="col col-6">
+                                        <?php if ($status == 'accepted'): ?>
+                                            <?php
+                                            $sSQL = "select * from tb_pameran where id_karya = $id_karya limit 1";
+                                            $sql = mysqli_query($conn, $sSQL);
+                                            $pmr = mysqli_fetch_assoc($sql);
+                                            if (mysqli_num_rows($sql) > 0):
+                                            ?>
+                                                <p>Jadwal Pameran:</p>
+                                                <p>Tanggal: <?= $pmr['tanggal']; ?></p>
+                                                <p>Lokasi: <?= $pmr['lokasi']; ?></p>
+                                                <p>Ruang: <?= $pmr['ruang_display']; ?></p>
+                                            <?php else: ?>
+                                                -
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <p class="">Deskripsi:<br><?= $deskripsi; ?></p>
+                                <?php
+                                if ($status == 'draft'):
+                                ?>
+                                    <a href="edit_daftar_karya.php?id_karya=<?= $id_karya; ?>" class="btn btn-success">Edit</a>
+                                    <a href="delete_daftar_karya.php?id_karya=<?= $id_karya; ?>&foto_karya=<?= $foto_karya; ?>" class="btn btn-warning" onclick="return confirm('Hapus karya ini?')">Delete</a>
+                                <?php endif; ?>
+
                             </div>
                         </div>
 
