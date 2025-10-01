@@ -42,7 +42,16 @@
             $_SESSION['isLoggedin'] = 1;
             $_SESSION['LoginGagal'] = 0;
 
-            header("location:dashboard.php");
+            if ($row['role'] == 'mahasiswa') {
+                $_SESSION['mahasiswa'] = true;
+                header("Location: ../index.php");
+            } elseif ($row['role'] == 'kurator') {
+                $_SESSION['kurator'] = true;
+                header("Location: ../kurasi.php");
+            } elseif ($row['role'] == 'admin') {
+                $_SESSION['admin'] = true;
+                header("location:dashboard.php");
+            }
         } else {
             $_SESSION['isLoggedin'] = 0;
             $_SESSION['LoginGagal'] = 1;

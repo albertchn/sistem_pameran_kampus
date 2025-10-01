@@ -1,3 +1,17 @@
+<?php
+session_start();
+if (!$_SESSION['isLoggedin'] == 1)
+    header("Location: cms/login.php");
+if (!isset($_SESSION['mahasiswa'])) {
+    if (isset($_SESSION['kurator'])) {
+        header("Location: kurasi.php");
+    } elseif (isset($_SESSION['admin'])) {
+        header("Location: cms/dashboard.php");
+    } else {
+        header("Location: cms/logout.php");
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +25,6 @@
 
 <body>
     <h1 class="h1 text-center">Daftar Karya</h1>
-    <?php session_start(); ?>
     <div class="container">
         <form action="simpan_daftar_karya.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" value="<?= $_SESSION['id_user']; ?>" name="id_user">

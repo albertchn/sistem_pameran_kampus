@@ -25,8 +25,16 @@
   <?php
   session_start();
   if (!$_SESSION['isLoggedin'] == 1)
-    header("location:login.php");
-
+    header("Location: login.php");
+  if (!isset($_SESSION['admin'])) {
+    if (isset($_SESSION['kurator'])) {
+      header("Location: ../kurasi.php");
+    } elseif (isset($_SESSION['mahasiswa'])) {
+      header("Location: ../index.php");
+    } else {
+      header("Location: logout.php");
+    }
+  }
   ?>
 
   <!-- Page Wrapper -->

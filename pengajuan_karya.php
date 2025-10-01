@@ -1,8 +1,16 @@
 <?php
 session_start();
-
 if (!$_SESSION['isLoggedin'] == 1)
-    header("location:cms/login.php");
+    header("Location: cms/login.php");
+if (!isset($_SESSION['mahasiswa'])) {
+    if (isset($_SESSION['kurator'])) {
+        header("Location: kurasi.php");
+    } elseif (isset($_SESSION['admin'])) {
+        header("Location: cms/dashboard.php");
+    } else {
+        header("Location: cms/logout.php");
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
