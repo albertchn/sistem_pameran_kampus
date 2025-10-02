@@ -186,7 +186,7 @@ if (!isset($_SESSION['admin'])) {
                             <tbody>
                                 <?php
                                 $sSQL = "";
-                                $sSQL = "select * from tb_karya where status in ('submitted','accepted','withdrawn','rejected') order by id_karya";
+                                $sSQL = "select * from tb_karya where status in ('submitted','accepted','withdrawn','rejected') order by id_karya desc";
                                 $result = mysqli_query($conn, $sSQL);
                                 if (mysqli_num_rows($result) > 0) {
                                     $no = 0;

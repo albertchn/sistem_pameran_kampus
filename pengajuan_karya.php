@@ -119,7 +119,7 @@ if (!isset($_SESSION['mahasiswa'])) {
             include "cms/connection.php";
             $id_user = $_SESSION['id_user'];
             $sSQL = "";
-            $sSQL = "select * from tb_karya where id_user = $id_user";
+            $sSQL = "select * from tb_karya where id_user = $id_user order by status";
             $result = mysqli_query($conn, $sSQL);
             if (mysqli_num_rows($result) > 0) {
                 $no = 0;
@@ -143,7 +143,7 @@ if (!isset($_SESSION['mahasiswa'])) {
                                         <p>Pencipta: <?= $pencipta; ?></p>
                                         <?php if ($status == 'accepted' or $status == 'submitted'): ?>
                                             <p>Status: <span style="color: lime;"><?= ucwords($status); ?></span></p>
-                                        <?php elseif ($status == 'rejected'): ?>
+                                        <?php elseif ($status == 'rejected' or $status == 'withdrawn'): ?>
                                             <p>Status: <span style="color: red;"><?= ucwords($status); ?></span></p>
                                         <?php endif; ?>
                                         <p>Skor:
@@ -152,6 +152,9 @@ if (!isset($_SESSION['mahasiswa'])) {
                                             <?php else: echo $skor;
                                             endif; ?>
                                         </p>
+                                        <?php if ($status == 'accepted'): ?>
+                                            <a href="withdrawn_karya.php?id_karya=<?= $id_karya; ?>&foto_karya=<?= $foto_karya; ?>" class="btn btn-danger mb-3" onclick="return confirm('Yakin batalkan pengajuan karya ini ?')">Withdrawn Karya</a>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="col col-6">
                                         <?php if ($status == 'accepted'): ?>

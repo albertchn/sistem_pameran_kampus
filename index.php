@@ -132,8 +132,12 @@
                                 <p align='center'><?= $lokasi; ?> | <?= date('d-m-Y', strtotime($tanggal)); ?></p>
                             </div>
                         </div>
-                <?php
+                    <?php
                     }
+                } else {
+                    ?>
+                    <h4 class="text-center my-4">Maaf Jadwal Pameran Belum Tersedia!</h4>
+                <?php
                 }
                 ?>
             </div>
