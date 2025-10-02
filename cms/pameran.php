@@ -200,7 +200,7 @@ if (!isset($_SESSION['admin'])) {
                                         $judul_karya = $row['judul_karya'];
                                         $foto_karya = $row['foto_kaya'];
                                         $tanggal = $row['tanggal'];
-                                        $lokasi = $row['pencipta'];
+                                        $lokasi = $row['lokasi'];
                                         $ruang_display = $row['ruang_display'];
                                 ?>
 

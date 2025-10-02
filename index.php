@@ -101,120 +101,72 @@
         </nav>
     </div>
 
-    <div class="container-fluid mt-2">
-        <?php
-        // $sSQL = "";
-        // $sSQL = "select * from tb_video  order by video_id desc limit 1";
-        // $result = mysqli_query($conn, $sSQL);
-        // if (mysqli_num_rows($result) > 0) {
-        //     $no = 0;
-        //     while ($row = mysqli_fetch_assoc($result)) {
-        //         $no++;
-        //         $video_id = $row['video_id'];
-        //         $video_name = $row['video_name'];
-        //         $video_file = $row['video_file'];
-        //     }
-        // }
-        ?>
-
-
-        <video src="video/<?php echo $video_file; ?>" width="100%" autoplay muted loop>
-        </video>
-
-
-    </div>
-
-    <div class="container-fluid mt-2 mb-3">
+    <div class="container mt-2">
         <marquee behavior="" direction="">
-            <h1 class="h1">Our Promo</h1>
+            <h1 class="h1">PAMERAN TERKEDAT</h1>
         </marquee>
-
-        <div class="row">
-            <div class="col-sm-4 col-md-4 mb-2 flip">
-                <img src="images/wedding.png" class="img-fluid">
-
+        <div id="carouselExampleCaptions" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
             </div>
-            <div class="col-sm-4 col-md-4 mb-2 flip">
-                <img src="images/wedding.png" class="img-fluid">
+            <div class="carousel-inner">
+                <?php
+                $sSQL = "";
+                $sSQL = "select * from tb_karya left join tb_pameran on tb_karya.id_karya = tb_pameran.id_karya where tb_pameran.status='scheduled' order by tb_pameran.tanggal";
+                $result = mysqli_query($conn, $sSQL);
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $judul_karya = $row['judul_karya'];
+                        $foto_karya = $row['foto_kaya'];
+                        $tanggal = $row['tanggal'];
+                        $pencipta = $row['pencipta'];
+                        $lokasi = $row['lokasi'];
+                ?>
+                        <div class="carousel-item active">
+                            <img src="images/<?= $foto_karya; ?>" class="d-block w-100 h-50" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5><?= $judul_karya; ?></h5>
+                                <p><?= $pencipta; ?></p>
+                                <p align='center'><?= $lokasi; ?> | <?= date('d-m-Y', strtotime($tanggal)); ?></p>
+                            </div>
+                        </div>
+                <?php
+                    }
+                }
+                ?>
             </div>
-            <div class="col-sm-4 col-md-4 flip">
-                <img src="images/wedding.png" class="img-fluid">
-            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-
     </div>
 
-    <div class="container mt-5">
-        <h1 class="h1 text-center">About Us</h1>
+    <div class="container my-5">
+        <h1 class="h1 text-center">Tentang Kami</h1>
         <div class="row mt-5">
             <div class="col-sm-6 col-md-6">
-                <img src="images/chef.jpg" class="img-fluid rounded-corner">
+                <img src="images/pusatseni.png" class="img-fluid rounded-corner w-100">
 
             </div>
             <div class="col-sm-6 col-md-6">
-                <p class="text-justify mb-2">
-                    What is Lorem Ipsum?
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever
-                    since the 1500s, when an unknown printer took a galley of type and
-                    scrambled it to make a type specimen book.
-                    It has survived not only five centuries, but also the leap
-                    into electronic typesetting, remaining essentially unchanged.
-                    It was popularised in the 1960s with the release of Letraset sheets containing
-                    <a href="about.php"
-                        style="text-decoration:none;color:red;font-size:9px">... more details</a>
+                <p style="text-align: justify; text-indent: 25px;">
+                    Pusat Seni Fakultas Seni hadir sebagai ruang kreatif yang mewadahi berbagai aktivitas seni, mulai dari pameran, pertunjukan, hingga penelitian dan pengembangan karya. Kami percaya bahwa seni tidak hanya menjadi sarana ekspresi, tetapi juga medium untuk membangun dialog, memperluas wawasan, dan memperkaya nilai-nilai budaya. Melalui kegiatan yang melibatkan mahasiswa, dosen, dan komunitas seni, pusat ini berupaya menghadirkan pengalaman estetik yang bermakna serta relevan dengan perkembangan zaman.
+                </p>
+                <p style="text-align: justify; text-indent: 25px;">
+                    Sebagai bagian dari fakultas, Pusat Seni berkomitmen untuk menjadi jembatan antara dunia akademik dan masyarakat luas. Dengan memadukan tradisi dan inovasi, kami berusaha menciptakan ruang kolaboratif yang inklusif, terbuka, dan inspiratif. Harapannya, pusat ini dapat menjadi katalis bagi tumbuhnya ekosistem seni yang dinamis sekaligus menjadi sumber inspirasi, pembelajaran, dan kontribusi nyata bagi perkembangan seni di tingkat lokal maupun global.
                 </p>
 
 
             </div>
         </div>
     </div>
-
-    <div class="container-fluid mt-4 bg-dark text-white pb-5">
-        <div class="row">
-            <div class="col-sm-4 col-md-4">
-                <ul style="list-style-type:none" class="ms-5 mt-5">
-                    <li><a href="index.php" class="link-footer active-footer">Home</a></li>
-                    <li><a href="about.php" class="link-footer">About Us</a></li>
-                    <li><a href="menu.php" class="link-footer">Our Menu</a></li>
-                    <li><a href="event.php" class="link-footer">Events</a></li>
-                    <li><a href="news.php" class="link-footer">News</a></li>
-                    <li><a href="contact.php" class="link-footer">Contact Us</a></li>
-
-
-                </ul>
-
-
-            </div>
-            <div class="col-sm-4 col-md-4">
-                <p class="p ms-5 mt-5">
-                <h3>Our Adress </h1>
-                    Jl.Sijuk Km 2.4 <br>
-                    Tanjung Pandan <br>
-                    Bangka Belitung <br>
-                    Indonesia.
-                    </p>
-
-
-
-            </div>
-            <div class="col-sm-4 col-md-4">
-                <iframe class="ms-5 mt-5" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.3232516009734!2d107.6711514!3d-2.7200070000000007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e173e01eb87033b%3A0x4b4d5c2ae692612d!2sPandan%20House%20Restaurant!5e0!3m2!1sid!2sid!4v1756198162558!5m2!1sid!2sid"
-                    width="auto" height="auto" style="border:0;"
-                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-
-
 </body>
 
 </html>
